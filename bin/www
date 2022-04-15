@@ -4,15 +4,15 @@ const http = require('http');
 const app = require("../app");
 const server = http.createServer(app);
 
-server.keepAliveTimeout=0;
-server.timeout=0;
-server.listen(process.env.PORT||3333);
+server.keepAliveTimeout = 0;
+server.timeout = 0;
+server.listen(process.env.PORT || 3000);
 
-server.on('error',function(error){
+server.on('error', function (error) {
     console.log(error);
 });
 
-server.on('listening',function(){
+server.on('listening', function () {
     const address = server.address();
-    console.log('listening on '+address.port);
+    console.log('listening on ' + address.port);
 });
