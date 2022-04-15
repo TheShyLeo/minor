@@ -20,8 +20,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json({"limit":"10240kb"}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-require('./library/init')(app,__dirname);
+require('./library/init')(__dirname);
 require('./routes/init')(app);
+require('./db/init')();
 
 process.on('SIGINT', () => {
     let child_pid = shared.get('child_pid');

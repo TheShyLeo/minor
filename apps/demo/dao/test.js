@@ -1,11 +1,11 @@
 const base = shared.get('base').dao;
+const con = shared.get('mysql');
 class dao extends base {
     constructor(ctx) {
         super(ctx);
     }
     async get() {
-        this.con = await this.getConnection();
-        return await this.con('test').select();
+        return await con('test').select();
     }
 }
 
