@@ -3,6 +3,26 @@
 const base = require('./base');
 const _ = require('lodash');
 
+//实现切面
+Function.prototype.before = function (beforefn, self) {
+    let _this = this; //  记录原函数的引用
+    return function () {
+        beforefn.apply(self, arguments);
+        return _this.apply(self, arguments);
+    }
+}
+
+Function.prototype.after = function (afterfn, self) {
+    let _this = this;
+    return function () {
+        let res = _this.apply(self, arguments);
+        afterfn.apply(self, arguments);
+        return res;
+    }
+}
+
+async function fun() { }
+
 class _M extends base {
     async execute(_m, params) {
         let result = {};
@@ -12,8 +32,20 @@ class _M extends base {
                 this.ctx.res.status(404).end();
                 return;
             }
+            let app = this.ctx.app;
+            //获取切面配置
+            let aspect = this.aspect;
             try {
-                result = await this[_m](params);
+                //获取切面函数对象
+                let beforeMap = require(shared.get('root') + `/apps/${app}/aspect/before`)
+                let afterMap = require(shared.get('root') + `/apps/${app}/aspect/after`)
+                if (aspect && aspect[_m]) {
+                    let f1 = beforeMap[aspect[_m].before] ? beforeMap[aspect[_m].before] : new Function();
+                    let f2 = afterMap[aspect[_m].after] ? afterMap[aspect[_m].after] : new Function();
+                    result = await this[_m].before(f1, this).after(f2, this)(params);
+                } else {
+                    result = await this[_m](params);
+                }
             } catch (ex) {
                 logger.error(ex);
                 this.ctx.code = 1;
