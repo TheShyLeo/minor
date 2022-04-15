@@ -38,7 +38,7 @@ class _M {
     new_api(name, cfg, app) {
         app = app || this.ctx.app;
         let API = require(shared.get('root') + '/library/base/api');
-        return API(app, name, cfg, this.ctx);
+        return new API(app, name, cfg, this.ctx);
     };
 
     get_config(name, path) {
