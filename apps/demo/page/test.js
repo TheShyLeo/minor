@@ -25,12 +25,12 @@ class page extends base {
             "get": "error"
         }
     }
-    // aspect = {
-    //     "get":{
-    //         "before":"beforeGet",
-    //         "after":"afterGet"
-    //     }
-    // }
+    aspect = {
+        "get":{
+            "before":"beforeGet",
+            "after":"afterGet"
+        }
+    }
 
     async get() {
         console.log("业务执行!!!!")

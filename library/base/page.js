@@ -2,6 +2,7 @@
 
 const base = require('./base');
 const _ = require('lodash');
+const { promises } = require('fs');
 
 //实现切面
 Function.prototype.before = function (beforefn, self) {
@@ -21,11 +22,13 @@ Function.prototype.after = function (afterfn, self) {
     }
 }
 
-async function fun() { }
+const exists = async beforePath => await promises.access(beforePath).then(() => true).catch(_ => false)
 
 class _M extends base {
     async execute(_m, params) {
         let result = {};
+        let beforeMap = {};
+        let afterMap = {};
         let ok = await this._before(params);
         if (ok) {
             if (!_.isFunction(this[_m])) {
@@ -35,10 +38,14 @@ class _M extends base {
             let app = this.ctx.app;
             //获取切面配置
             let aspect = this.aspect;
+            let beforePath = shared.get('root') + `/apps/${app}/aspect/before.js`;
+            let afterPath = shared.get('root') + `/apps/${app}/aspect/after.js`;
+            //获取切面函数对象
+            const exist1 = await exists(beforePath)
+            const exist2 = await exists(afterPath)
+            if (exist1) beforeMap = require(beforePath)
+            if (exist2) afterMap = require(afterPath)
             try {
-                //获取切面函数对象
-                let beforeMap = require(shared.get('root') + `/apps/${app}/aspect/before`)
-                let afterMap = require(shared.get('root') + `/apps/${app}/aspect/after`)
                 if (aspect && aspect[_m]) {
                     let f1 = beforeMap[aspect[_m].before] ? beforeMap[aspect[_m].before] : new Function();
                     let f2 = afterMap[aspect[_m].after] ? afterMap[aspect[_m].after] : new Function();

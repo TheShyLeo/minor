@@ -51,4 +51,6 @@ tool.genUID=function () {
     return shortid.generate();
 };
 
+tool.exists = async beforePath => await promises.access(beforePath).then(() => true).catch(_ => false)
+
 module.exports=tool;

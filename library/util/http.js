@@ -36,11 +36,11 @@ module.exports = function (app, name) {
     if (client) {
         return client;
     }
-
-    let cfg = require(`${shared.get('root')}/conf/up/http/${app}`);
-    if (cfg) {
+    let cfg;
+    try {
+        cfg = require(`${shared.get('root')}/conf/up/http/${app}`);
         cfg = cfg[name];
-    } else {
+    } catch (e) {
         console.log(`${__dirname}/../../conf/up/http/${app}.js is not exist`);
     }
     let option = {

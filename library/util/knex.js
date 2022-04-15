@@ -13,8 +13,10 @@ module.exports = function (app, name) {
         if (map[`${app}_${name}`]) {
             return map[`${app}_${name}`];
         }
-        cfg = require(`${shared.get('root')}/conf/up/db/${app}`)[name];
-        if (!cfg) {
+        try {
+            cfg = require(`${shared.get('root')}/conf/up/db/${app}`)[name];
+        } catch (e) {
+            logger.error(`${shared.get('root')}/conf/up/db/${app}.js is not exist`);
             //使用默认连接
             return shared.get('mysql')
         }
