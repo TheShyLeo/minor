@@ -8,7 +8,7 @@ const map = {};
 module.exports = function (app, name) {
     let cfg;
     if (!name && !app) {
-        cfg = require(`${shared.get('root')}/db/global`)
+        cfg = require(`${shared.get('root')}/db/global`).mysql;
     } else {
         if (map[`${app}_${name}`]) {
             return map[`${app}_${name}`];

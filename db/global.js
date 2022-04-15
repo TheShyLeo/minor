@@ -7,19 +7,6 @@ const connection = {
     // password: "root",
     // database: "demo",
     
-    //开发
-    host:"121.43.52.191",
-    user:"root",
-    password:"Veily2016",
-    port:8306,
-    database:"mts", 
-
-    // //测试
-    // host:"47.114.77.224",
-    // user:"root",
-    // password:"Veily@2020",
-    // port:8307,
-    // database:"pcbs_prod",
 }
 
 module.exports = {
