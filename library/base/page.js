@@ -7,17 +7,17 @@ const { promises } = require('fs');
 //实现切面
 Function.prototype.before = function (beforefn, self) {
     let _this = this; //  记录原函数的引用
-    return function () {
-        beforefn.apply(self, arguments);
+    return  async  function () {
+        await beforefn.apply(self, arguments);
         return _this.apply(self, arguments);
     }
 }
 
 Function.prototype.after = function (afterfn, self) {
     let _this = this;
-    return function () {
-        let res = _this.apply(self, arguments);
-        afterfn.apply(self, arguments);
+    return async  function () {
+        let res = await _this.apply(self, arguments);
+        await afterfn.apply(self, arguments);
         return res;
     }
 }

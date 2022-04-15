@@ -32,7 +32,8 @@ class page extends base {
         }
     }
 
-    async get() {
+    async get(params) {
+        console.log('params: ', params);
         console.log("业务执行!!!!")
         return await this.data.get();
     };
