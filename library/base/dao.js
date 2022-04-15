@@ -5,7 +5,7 @@ const knex = require(shared.get('root') + '/library/util/knex');
 class _M extends base {
     constructor(ctx, name) {
         super(ctx);
-        this.name = name || 'base';
+        this.name = name || 'mysql';
     }
     async getConnection() {
         try {
