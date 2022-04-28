@@ -62,7 +62,7 @@ fn_install_pkg(){
 
 #保证在同级目录下 保证是-v 0打包
 fn_i(){
-    name=../../veily_app_$action/output/$action-0.0.1.0.tar.gz
+    name=../../$action/output/$action-0.0.1.0.tar.gz
     fn_install_pkg $name
 }
 
