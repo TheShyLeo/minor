@@ -6,7 +6,13 @@ const connection = {
     // user: "root",
     // password: "root",
     // database: "demo",
-    
+
+    type: "mysql",
+    host: "121.43.52.191",
+    user: "root",
+    password: "Veily2016",
+    port: 8306,
+    database: "mts",
 }
 
 module.exports = {
